@@ -5,7 +5,7 @@ on:
       - main
 
 jobs:
-  laravel-tests:
+  laravel:
     runs-on: ubuntu-latest
 
     steps:
@@ -23,6 +23,11 @@ jobs:
 
       - name: Install Dependencies
         run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+
+      - name: PHPStan Static Analysis
+        uses: php-actions/phpstan@v3
+        with:
+          memory_limit: 256M
 
       - name: Copy .env
         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
